@@ -26,10 +26,12 @@ function empty()
 <title>Log-in Page</title>
 </head>
 <body>
-    <form action="loginServlet" method="GET">
-    User name: <input type="text" name="yourUN" id="yourUS"> <br><br>
+    <form action="loginServlet" method="POST">
+    User name: <input type="text" name="yourUN" id="yourUN"> <br><br>
     Password: <input type="text" name="yourPass" id="yourPass"> <br><br>
     <input type="submit" value="Submit" onClick="return empty()"/>
-</form>
+	</form>
+	
+	<button onclick="window.location.href='register.jsp'">Register</button>
 </body>
 </html>

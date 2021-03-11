@@ -13,23 +13,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class RegisterServlet
  */
-public class LoginServlet extends HttpServlet {
+public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public RegisterServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		// JDBC driver name and database URL
 	      final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
@@ -57,33 +57,38 @@ public class LoginServlet extends HttpServlet {
 	         java.sql.Statement stmt = conn.createStatement();
 	         /////////
 	         
-	         String un = request.getParameter("yourUN");
-	         String pass = request.getParameter("yourPass");
-	         String id = null;;
-	         String passChk = null;
+	         String un = request.getParameter("newUS");
 	         
-	         String sql = "SELECT * FROM userdetails WHERE username='"+un + "'";
+	         
+	         String sql = "SELECT * FROM `userdetails`;";
+	         
 	         
 	         ResultSet rs = stmt.executeQuery(sql);
 	         
-	         while(rs.next())
-	         {
-	        	 passChk = rs.getString("password");
+	         if (rs.next() == false) 
+	         { 
+	        	 //Create User
+	        	 
+	        	 // Clean-up environment
+		         rs.close();
+		         stmt.close();
+		         conn.close();
+		         
+	        	 //go to log-in page
+		         response.sendRedirect("index.jsp");
 	         }
-
-	         if(passChk.equals(pass))
+	         else
 	         {
+	        	 out.println("Username already exists");
+	        	 // Clean-up environment
 		         rs.close();
 		         stmt.close();
 		         conn.close();
 		         
 	        	//go to landing page
-		        response.sendRedirect("landing.jsp");
-	         }	 
-	         else 
-	         {
-	        	 response.sendRedirect("invalidLogin.jsp"); //error page 
-	         }  
+		        response.sendRedirect("register.jsp");
+	         }
+  
 	      } 
 	      catch(SQLException se) 
 	      {
@@ -96,6 +101,5 @@ public class LoginServlet extends HttpServlet {
 	         e.printStackTrace();
 	      }
 	}
-
 
 }
