@@ -29,7 +29,7 @@ function empty()
     <form action="loginServlet" method="POST">
     User name: <input type="text" name="yourUN" id="yourUN"> <br><br>
     Password: <input type="text" name="yourPass" id="yourPass"> <br><br>
-    <input type="submit" value="Submit" onClick="return empty()"/>
+    <input type="submit" value="Log in" onClick="return empty()"/>
 	</form>
 	
 	<button onclick="window.location.href='register.jsp'">Register</button>
