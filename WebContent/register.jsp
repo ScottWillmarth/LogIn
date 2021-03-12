@@ -28,7 +28,8 @@ function empty()
 </head>
 <body>
 	<form action="registerServlet" method="POST">
-    	Create a Username: <input type="text" name="newUN" id="newUS"> <br><br>
+    	Please Enter Your Name: <input type="text" name="newName" id="newName"> <br><br>
+    	Create a Username: <input type="text" name="newUN" id="newUN"> <br><br>
     	Create a Password: <input type="text" name="newPass" id="newPass"> <br><br>
     	<input type="submit" value="Submit" onClick="return empty()"/>
 	</form>

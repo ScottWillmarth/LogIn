@@ -41,7 +41,6 @@ public class LoginServlet extends HttpServlet {
 
 	      // Set response content type
 	      response.setContentType("text/html");
-	      PrintWriter out = response.getWriter();
 	      
 	      try 
 	      {
@@ -59,7 +58,6 @@ public class LoginServlet extends HttpServlet {
 	         
 	         String un = request.getParameter("yourUN");
 	         String pass = request.getParameter("yourPass");
-	         String id = null;;
 	         String passChk = null;
 	         
 	         String sql = "SELECT * FROM userdetails WHERE username='"+un + "'";

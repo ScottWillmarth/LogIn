@@ -4,11 +4,10 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Landing Page</title>
+<title>Invalid Username</title>
 </head>
 <body>
-This is the landing page
-<br>
-<button onclick="window.location.href='index.jsp'">Log out</button>
+	<h1>This username is already taken</h1>
+	<button onclick="window.location.href='register.jsp'">OK</button>
 </body>
 </html>

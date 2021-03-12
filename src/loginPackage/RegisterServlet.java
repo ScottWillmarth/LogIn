@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -31,7 +32,7 @@ public class RegisterServlet extends HttpServlet {
 	 */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		// JDBC driver name and database URL
+    	// JDBC driver name and database URL
 	      final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	      final String DB_URL="jdbc:mysql://localhost:3306/users";
 
@@ -41,11 +42,9 @@ public class RegisterServlet extends HttpServlet {
 
 	      // Set response content type
 	      response.setContentType("text/html");
-	      PrintWriter out = response.getWriter();
 	      
 	      try 
-	      {
-	    	 
+	      { 
 	         // Register JDBC driver
 	         Class.forName(JDBC_DRIVER);
 	         
@@ -57,38 +56,30 @@ public class RegisterServlet extends HttpServlet {
 	         java.sql.Statement stmt = conn.createStatement();
 	         /////////
 	         
-	         String un = request.getParameter("newUS");
+	         String un = request.getParameter("newUN");
+	         String pass = request.getParameter("newPass");
+	         String name = request.getParameter("newName");
 	         
-	         
-	         String sql = "SELECT * FROM `userdetails`;";
-	         
+	         String sql = "SELECT * FROM userdetails WHERE username='"+un + "'";
 	         
 	         ResultSet rs = stmt.executeQuery(sql);
 	         
-	         if (rs.next() == false) 
-	         { 
-	        	 //Create User
-	        	 
-	        	 // Clean-up environment
-		         rs.close();
-		         stmt.close();
-		         conn.close();
-		         
-	        	 //go to log-in page
+	         if(!rs.next())
+	         {
+	        	 sql = "INSERT INTO userdetails(username,password,name) VALUES ('"+un+"','"+pass+"','"+name+"')"; 
+
+		         PreparedStatement ps1 = conn.prepareStatement(sql); 
+		         ps1.execute();
 		         response.sendRedirect("index.jsp");
 	         }
 	         else
 	         {
-	        	 out.println("Username already exists");
-	        	 // Clean-up environment
-		         rs.close();
-		         stmt.close();
-		         conn.close();
-		         
-	        	//go to landing page
-		        response.sendRedirect("register.jsp");
+	        	 response.sendRedirect("nameTaken.jsp");
 	         }
-  
+	         
+	         
+             
+           
 	      } 
 	      catch(SQLException se) 
 	      {
